@@ -1,0 +1,10 @@
+This is for a small coding project for a software development class. If you aren't me or my teacher, hello I guess, but there probably isn't much here for you.
+The goal of the project is to create a program using python with the breezypythongui module. The program I have chosen to create will calculate and display the day of the week of an input date, and do some other things as well.
+Currently I have a gui program that calculates the day of the week. The info is input using either sliders for the month and the day of month, and an input box for the year that can also be incremented/decremented by 1, 10, or 100 years 
+using buttons. It outputs the day of the week in a different text box. 
+
+Remaining todo:
+Add a function to create a new window displaying the date on a text calendar
+Add a button to close the program
+Add other functionality required by college (images, or labels, etc.)
+Add a label displaying facts about calendars or dates
