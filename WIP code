@@ -1,0 +1,148 @@
+from breezypythongui import EasyFrame
+# importing necessary module
+
+
+class DayOfTheWeekCalculator(EasyFrame):
+    def __init__(self):
+# setting up the window
+        EasyFrame.__init__(self, width=300, height=300)
+        self.setTitle("Day of the Week")
+        # sets the title
+        self.currentDayOfWeek = ""
+
+        self.yearSelectPanel = self.addPanel(row=1,column=0, columnspan=5, rowspan= 2, background= "blue")
+        self.yearSelectPanel.addLabel(text="Year:", row = 1, column= 3, sticky= "N")
+        self.yearSelectPanel.subtract100Years = self.yearSelectPanel.addButton(text = "<<<", row=2, column=0,
+                                                                               command=self.decrementYearByOneHundred)
+        self.yearSelectPanel.subtract10Years = self.yearSelectPanel.addButton(text = "<<", row=2, column=1,
+                                                                              command=self.decrementYearByTen)
+        self.yearSelectPanel.subtract1Year = self.yearSelectPanel.addButton(text = "<", row=2, column=2,
+                                                                            command= self.decrementYearByOne)
+        self.yearSelectPanel.year = self.yearSelectPanel.addIntegerField(value=2000, row=2, column=3, sticky="")
+        self.yearSelectPanel.add1Year = self.yearSelectPanel.addButton(text=">", row=2, column=4,
+                                                                       command=self.incrementYearByOne)
+        self.yearSelectPanel.add10Years = self.yearSelectPanel.addButton(text=">>", row=2,column=5,
+                                                                         command=self.incrementYearByTen)
+        self.yearSelectPanel.add100Years = self.yearSelectPanel.addButton(text=">>>", row=2,column=6,
+                                                                         command=self.incrementYearByOneHundred)
+
+        self.month = self.addScale(label="Month: January",row = 3,column=0,from_=1, to=12, columnspan=3,
+                                   command=self.displayMonth)
+        self.day = self.addScale(label = "Day", row=4, column=0, from_=1, to= 31, columnspan=3)
+        self.calculate = self.addButton(text="Calculate", row=6, column=0, command=self.dayOfTheWeek)
+        self.dayOfWeekLabel = self.addLabel(text="Day of the week is: " + self.currentDayOfWeek, row=5, column=0)
+        # setting up all the widgets and what they do
+
+    def dayOfTheWeek(self):
+        """This function calculates the day of the week by calculating the number of days that have passed since the
+        beginning, adding extra days from leap years, and dividing the number by 7 before using the remainder to find
+        the day of the week according to the list"""
+        isLeapYear = 0
+        monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        daysOfTheWeek = ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+        # stuff the function needs
+
+        year = self.yearSelectPanel.year.get()
+        month = self.month.get()
+        day = self.day.get()
+        # getting the values for the date from the gui
+
+        if int(year) % 4 == 0:
+            if int(year) % 100 == 0:
+                if int(year) % 400 == 0:
+                    isLeapYear = 1
+            else:
+                isLeapYear = 1
+        # checking if current year is a leap year
+
+        if day > monthDays[month - 1]:
+            if month == 2 and isLeapYear == 1:
+                if day > 29:
+                    self.dayOfWeekLabel["text"] = "invalid date"
+                    return
+            else:
+                self.dayOfWeekLabel["text"] = "invalid date"
+                return
+        # makes sure the day of the month is valid, also taking leap years into account with feb 29
+
+        leapYearSkips = int(year) // 100
+        leapYearSkipSkips = int(year) // 400
+        # checking how many leap year skips there have been
+
+        leapYears = (int(year) // 4) - leapYearSkips + leapYearSkipSkips
+        # calculating the total number of leap years
+
+        daysFromYears = (int(year) * 365 + leapYears)
+        # calculating how many days are added from the number of years
+
+        daysFromMonth = 0
+        monthCounted = int(month)
+        while monthCounted > 1:
+            daysFromMonth += monthDays[monthCounted - 2]
+            monthCounted -= 1
+        # this calculates how many days are added from the month. It adds up all the days from the months preceding
+        # the input month
+
+        if isLeapYear == 1 and int(month) > 2:
+            daysFromMonth += 1
+        if isLeapYear == 1:
+            daysFromMonth -= 1
+        # takes february 29th into account if it is a leap year, and a month past february
+
+        daysSinceBeginning = daysFromYears + daysFromMonth + int(day)
+        # adds up all the days since 0/00/0000
+
+        dayOfWeek = daysSinceBeginning % 7
+        # gets the remainder from dividing by seven
+
+        self.currentDayOfWeek = (daysOfTheWeek[dayOfWeek])
+        # changes the current day of the week to the corresponding date according to the list
+        weekDayString = "Day of the week is: " + self.currentDayOfWeek
+        self.dayOfWeekLabel["text"] = weekDayString
+
+    def displayMonth(self, date):
+        monthList = ["January","February","March","April","May","June",
+                     "July","August","September","October","November","December"]
+        # list of the months
+        newMonthLabel = "Month: " + monthList[int(date) - 1]
+        self.month["label"] = newMonthLabel
+        # changes the label of the month slider to represent the currently selected month
+
+    def incrementYearByOne(self):
+        year = self.yearSelectPanel.year.getNumber()
+        year += 1
+        self.yearSelectPanel.year.setValue(year)
+
+    def incrementYearByTen(self):
+        year = self.yearSelectPanel.year.getNumber()
+        year += 10
+        self.yearSelectPanel.year.setValue(year)
+
+    def incrementYearByOneHundred(self):
+        year = self.yearSelectPanel.year.getNumber()
+        year += 100
+        self.yearSelectPanel.year.setValue(year)
+
+    def decrementYearByOne(self):
+        year = self.yearSelectPanel.year.getNumber()
+        year -= 1
+        self.yearSelectPanel.year.setValue(year)
+
+    def decrementYearByTen(self):
+        year = self.yearSelectPanel.year.getNumber()
+        year -= 10
+        self.yearSelectPanel.year.setValue(year)
+
+    def decrementYearByOneHundred(self):
+        year = self.yearSelectPanel.year.getNumber()
+        year -= 100
+        self.yearSelectPanel.year.setValue(year)
+    # the above functions are to increment or decrement the year value by 1, 10, or 100
+    
+def main():
+    DayOfTheWeekCalculator().mainloop()
+
+
+if __name__ == "__main__":
+    main()
+# things that keep the loop running
