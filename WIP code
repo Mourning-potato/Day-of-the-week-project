@@ -256,6 +256,8 @@ class DayOfTheWeekCalculator(EasyFrame):
         """decrements the year by one"""
         year = self.yearSelectPanel.year.getNumber()
         year -= 1
+        if year < 1:
+            year = 1
         self.yearSelectPanel.year.setValue(year)
         self.dayOfTheWeek()
 
@@ -263,6 +265,8 @@ class DayOfTheWeekCalculator(EasyFrame):
         """decrements the year by ten"""
         year = self.yearSelectPanel.year.getNumber()
         year -= 10
+        if year < 1:
+            year = 1
         self.yearSelectPanel.year.setValue(year)
         self.dayOfTheWeek()
 
@@ -270,9 +274,14 @@ class DayOfTheWeekCalculator(EasyFrame):
         """decrements the year by one hundred"""
         year = self.yearSelectPanel.year.getNumber()
         year -= 100
+        if year < 1:
+            year = 1
         self.yearSelectPanel.year.setValue(year)
         self.dayOfTheWeek()
-    # the above functions are to increment or decrement the year value by 1, 10, or 100
+    # the above functions are to increment or decrement the year value by 1, 10, or 100. In addition, if the year goes
+    # below 1, it is reset to 1. I would have liked to have allowed it to go into BC, but I haven't been able to get a 
+    # good source on the days of the week in BC, which complicates testing, and the project is due today so I don't 
+    # really care
 
     def dayChange(self, date):
         """runs the day of the week function when the day slider is moved"""
