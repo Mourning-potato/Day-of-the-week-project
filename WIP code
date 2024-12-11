@@ -22,12 +22,13 @@ class DayOfTheWeekCalculator(EasyFrame):
         # list of days for the calendar to display
 
         self.dayLabel = self.addLabel(text="        |  SAT  | SUN |MON|  TUE | WED | THU |  FRI  |", row=11,column=0)
-        self.calendarRow1 = self.addLabel(text="", row=12,column=0)
-        self.calendarRow2 = self.addLabel(text="", row=13,column=0)
-        self.calendarRow3 = self.addLabel(text="", row=14,column=0)
-        self.calendarRow4 = self.addLabel(text="", row=15,column=0)
-        self.calendarRow5 = self.addLabel(text="", row=16,column=0)
-        self.calendarRow6 = self.addLabel(text="", row=17,column=0)
+        self.monthLabel = self.addLabel(text=self.monthList[0],row=12,column=0, sticky="N")
+        self.calendarRow1 = self.addLabel(text="", row=13,column=0)
+        self.calendarRow2 = self.addLabel(text="", row=14,column=0)
+        self.calendarRow3 = self.addLabel(text="", row=15,column=0)
+        self.calendarRow4 = self.addLabel(text="", row=16,column=0)
+        self.calendarRow5 = self.addLabel(text="", row=17,column=0)
+        self.calendarRow6 = self.addLabel(text="", row=18,column=0)
         # labels for the calendar display
 
         self.yearSelectPanel = self.addPanel(row=1,column=0, columnspan=5, rowspan= 2, background= "blue")
@@ -222,11 +223,12 @@ class DayOfTheWeekCalculator(EasyFrame):
             # adds in the sixth weeks
 
     def displayMonth(self, date):
-        """changes the month display label to show the currently selected month, and reruns the dayOfTheWeek function"""
+        """changes the month display labels to show the currently selected month, and reruns the dayOfTheWeek function"""
         monthList = self.monthList
         # gets the list of months
         newMonthLabel = "Month: " + monthList[int(date) - 1]
         self.month["label"] = newMonthLabel
+        self.monthLabel["text"] = monthList[int(date) - 1]
         self.dayOfTheWeek()
 
     def incrementYearByOne(self):
