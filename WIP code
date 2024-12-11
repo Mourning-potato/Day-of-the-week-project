@@ -53,14 +53,15 @@ class DayOfTheWeekCalculator(EasyFrame):
         self.day = self.addScale(label = "Day", row=4, column=0, from_=1, to= 31, columnspan=3,
                                  command=self.dayChange)
         # setting up the day and month scales
-        self.addLabel(text = "The day of the week is automatically calculated when \n the sliders are moved", row = 7, column = 0)
+        self.addLabel(text = "The day of the week is automatically calculated when \n the sliders are moved", row = 7,
+                      column = 0)
         self.hideCalendar = self.addButton(text="hide calendar", row=9, column=0, command=self.hideCalendar)
         self.dayOfWeekLabel = self.addLabel(text="Day of the week is: " + self.currentDayOfWeek, row=5, column=0)
         self.dayOfTheWeek()
         # setting up the other labels, and initializing the program
 
         self.setResizable(False)
-        self.imageLabel = self.addLabel(text="", row=10, column=0, sticky="NSEW")
+        self.imageLabel = self.addButton(text="", row=10, column=0, command=self.altText)
         # Load the image and associate it with the image label.
         self.notHere = PhotoImage(file="not-here.gif")
         self.calculate = PhotoImage(file="calculate.gif")
@@ -279,8 +280,8 @@ class DayOfTheWeekCalculator(EasyFrame):
         self.yearSelectPanel.year.setValue(year)
         self.dayOfTheWeek()
     # the above functions are to increment or decrement the year value by 1, 10, or 100. In addition, if the year goes
-    # below 1, it is reset to 1. I would have liked to have allowed it to go into BC, but I haven't been able to get a 
-    # good source on the days of the week in BC, which complicates testing, and the project is due today so I don't 
+    # below 1, it is reset to 1. I would have liked to have allowed it to go into BC, but I haven't been able to get a
+    # good source on the days of the week in BC, which complicates testing, and the project is due today so I don't
     # really care
 
     def dayChange(self, date):
@@ -302,6 +303,7 @@ class DayOfTheWeekCalculator(EasyFrame):
             self.hideCalendar["text"] = "Open calendar"
             self.imageLabel["image"] = self.notHere
             self.textLabel["text"] = ""
+            self.monthLabel["text"] = ""
             # if the calendar is open, it is hidden, and image is changed to "not here"
         else:
             self.calendarOpen = True
@@ -312,6 +314,12 @@ class DayOfTheWeekCalculator(EasyFrame):
             self.textLabel["text"] = "calculating..."
             # if the calendar is hidden, it is opened, and the image is changed to "calculating"
 
+    def altText(self):
+        if self.hideCalendar["text"] == "Open calendar":
+            self.messageBox(title="alt text", message="an image of a man standing, about to snap his fingers, with text"
+                                                      "saying 'not here'")
+        else:
+            self.messageBox(title="alt text", message="an image of a woman's face with math floating around")
 def main():
     DayOfTheWeekCalculator().mainloop()
 
