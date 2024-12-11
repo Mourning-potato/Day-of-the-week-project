@@ -5,6 +5,13 @@ using buttons. It outputs the day of the week in a different text box.
 
 Remaining todo:
 Add a function to create a new window displaying the date on a text calendar
+>Project requirements changed so that two windows is no longer necessary
 Add a button to close the program
+>No longer necessary after clarification by teacher
 Add other functionality required by college (images, or labels, etc.)
+>Done
 Add a label displaying facts about calendars or dates
+>Decided against for now
+
+Future TODO (if I ever decide to look at this after the semester)
+Add BC support
