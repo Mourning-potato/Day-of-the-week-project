@@ -59,10 +59,10 @@ class DayOfTheWeekCalculator(EasyFrame):
                       column = 0)
         self.hideCalendar = self.addButton(text="hide calendar", row=9, column=0, command=self.hideCalendar)
         self.dayOfWeekLabel = self.addLabel(text="Day of the week is: " + self.currentDayOfWeek, row=5, column=0)
+        # setting up the other labels
         self.dayOfTheWeek()
-        # setting up the other labels, and initializing the program
+        # running the dayOfTheWeek function on initialization
 
-        self.setResizable(False)
         self.imageLabel = self.addButton(text="", row=10, column=0, command=self.altText)
         # Load the image and associate it with the image label.
         self.notHere = PhotoImage(file="not-here.gif")
@@ -72,7 +72,7 @@ class DayOfTheWeekCalculator(EasyFrame):
         font = Font(family = "Verdana", size = 20, slant = "italic")
         self.textLabel["font"] = font
         self.textLabel["foreground"] = "red"
-        # sets up the images
+        # setting up the images, and the text with on of the images
 
     def dayOfTheWeek(self):
         """This function calculates the day of the week by calculating the number of days that have passed since the
@@ -333,4 +333,3 @@ def main():
 if __name__ == "__main__":
     main()
 # things that keep the loop running
-
