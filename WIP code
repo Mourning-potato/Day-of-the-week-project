@@ -13,7 +13,9 @@ class DayOfTheWeekCalculator(EasyFrame):
         self.setTitle("Day of the Week")
         # sets the title
         self.currentDayOfWeek = ""
+        # empty string for the day of the week. Will be filled in when the dayOfTheWeek function is run
         self.calendarOpen = True
+        # boolean used to keep track of if the calendar is currently displayed
         self.monthList = ["January","February","March","April","May","June",
                      "July","August","September","October","November","December"]
         self.dayList = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15",
@@ -21,14 +23,14 @@ class DayOfTheWeekCalculator(EasyFrame):
                         "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00"]
         # list of days for the calendar to display
 
-        self.dayLabel = self.addLabel(text="        |  SAT  | SUN |MON|  TUE | WED | THU |  FRI  |", row=11,column=0)
+        self.dayLabel = self.addLabel(text="        |  SAT  | SUN |MON|  TUE | WED | THU |  FRI  |", row=13,column=0)
         self.monthLabel = self.addLabel(text=self.monthList[0],row=12,column=0, sticky="N")
-        self.calendarRow1 = self.addLabel(text="", row=13,column=0)
-        self.calendarRow2 = self.addLabel(text="", row=14,column=0)
-        self.calendarRow3 = self.addLabel(text="", row=15,column=0)
-        self.calendarRow4 = self.addLabel(text="", row=16,column=0)
-        self.calendarRow5 = self.addLabel(text="", row=17,column=0)
-        self.calendarRow6 = self.addLabel(text="", row=18,column=0)
+        self.calendarRow1 = self.addLabel(text="", row=14,column=0)
+        self.calendarRow2 = self.addLabel(text="", row=15,column=0)
+        self.calendarRow3 = self.addLabel(text="", row=16,column=0)
+        self.calendarRow4 = self.addLabel(text="", row=17,column=0)
+        self.calendarRow5 = self.addLabel(text="", row=18,column=0)
+        self.calendarRow6 = self.addLabel(text="", row=19,column=0)
         # labels for the calendar display
 
         self.yearSelectPanel = self.addPanel(row=1,column=0, columnspan=5, rowspan= 2, background= "blue")
@@ -78,9 +80,11 @@ class DayOfTheWeekCalculator(EasyFrame):
         the day of the week according to the list. It then changes the current display on the calendar label to show the
         currently selected date in < >, and changes the calendar if the month or year is changed"""
         isLeapYear = 0
+        # keeps track of whether it is a leap year. 1 if it is a leap year, 0 if not. Is a numeral as it makes some math
+        # later on easier
         monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
         daysOfTheWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-        # stuff the function needs
+        # lists for the number of days in each month, and the names of the days of the week
 
         year = self.yearSelectPanel.year.get()
         month = self.month.get()
@@ -107,7 +111,7 @@ class DayOfTheWeekCalculator(EasyFrame):
 
         leapYearSkips = int(year) // 100
         leapYearSkipSkips = int(year) // 400
-        # checking how many leap year skips there have been
+        # checking how many leap year skips, and skip skips there have been
 
         leapYears = (int(year) // 4) - leapYearSkips + leapYearSkipSkips
         # calculating the total number of leap years
@@ -141,6 +145,7 @@ class DayOfTheWeekCalculator(EasyFrame):
 
         weekDayString = "Day of the week is: " + self.currentDayOfWeek
         self.dayOfWeekLabel["text"] = weekDayString
+        # changes the text for the label showing the day of the week
 
         if self.calendarOpen:
             currentDay = 1
@@ -315,14 +320,17 @@ class DayOfTheWeekCalculator(EasyFrame):
             # if the calendar is hidden, it is opened, and the image is changed to "calculating"
 
     def altText(self):
+        """displays alt text when the images are clicked"""
         if self.hideCalendar["text"] == "Open calendar":
             self.messageBox(title="alt text", message="an image of a man standing, about to snap his fingers, with text"
                                                       "saying 'not here'")
         else:
             self.messageBox(title="alt text", message="an image of a woman's face with math floating around")
+        # chooses which alt text to display based on the image that is currently in use
 def main():
     DayOfTheWeekCalculator().mainloop()
 
 if __name__ == "__main__":
     main()
 # things that keep the loop running
+
